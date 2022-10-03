@@ -37,7 +37,7 @@ define( 'BARK_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
  */
 function activate_bark_plugin() {
 	require_once plugin_dir_path( __FILE__ ) . 'includes/class-bark-plugin-activator.php';
-	Dutchie_Connect_Activator::activate();
+	Bark_Plugin_Activator::activate();
 }
 
 /**
@@ -46,7 +46,7 @@ function activate_bark_plugin() {
  */
 function deactivate_bark_plugin() {
 	require_once plugin_dir_path( __FILE__ ) . 'includes/class-bark-plugin-deactivator.php';
-	Dutchie_Connect_Deactivator::deactivate();
+	Bark_Plugin_Deactivator::deactivate();
 }
 
 register_activation_hook( __FILE__, 'activate_bark_plugin' );

@@ -1,0 +1,154 @@
+.nice-select {
+  -webkit-tap-highlight-color: transparent;
+  background: none;
+  border: solid 2px #222222;
+  clear: both;
+  cursor: pointer;
+  display: block;
+  float: left;
+  height: 62px;
+  line-height: 38px;
+  outline: none;
+  padding:0 20px;
+  position: relative;
+  text-align: left !important;
+  -webkit-transition: all 0.2s ease-in-out;
+  transition: all 0.2s ease-in-out;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+  white-space: nowrap;
+  width: 100%; }
+.nice-select:hover {
+    /*border-color: #dbdbdb;*/
+}
+.nice-select span { display:block; height:58px; line-height:58px;}
+.nice-select:active, 
+.nice-select.open, 
+.nice-select:focus {
+    border-color: #ffffff;
+}
+.nice-select:after {
+   	content: '';
+    display: block;
+    height: 8px;
+	width:15px;
+    margin-top: -4px;
+    pointer-events: none;
+    position: absolute;
+    right: 16px;
+    top: 50%;
+	background:url(../images/select_down.svg) no-repeat center center;
+    /*-webkit-transform-origin: 66% 66%;
+        -ms-transform-origin: 66% 66%;
+            transform-origin: 66% 66%;*/
+    -webkit-transform: rotate(0deg);
+        -ms-transform: rotate(0deg);
+            transform: rotate(0deg);
+    -webkit-transition: all 0.15s ease-in-out;
+    transition: all 0.15s ease-in-out;
+}
+.nice-select.open:after {
+    -webkit-transform: rotate(-180deg);
+        -ms-transform: rotate(-180deg);
+            transform: rotate(-180deg); }
+.nice-select.open .list {
+    opacity: 1;
+    pointer-events: auto;
+    -webkit-transform: scale(1) translateY(0);
+        -ms-transform: scale(1) translateY(0);
+            transform: scale(1) translateY(0); }
+.nice-select.disabled {
+    border-color: #ededed;
+    color: #999;
+    pointer-events: none; }
+.nice-select.disabled:after {
+      border-color: #cccccc; }
+.nice-select.wide {
+    width: 100%; }
+.nice-select.wide .list {
+      left: 0 !important;
+      right: 0 !important; }
+.nice-select.right {
+    float: right; }
+ .nice-select.right .list {
+      left: auto;
+      right: 0; }
+.nice-select.small {
+    font-size: 12px;
+    height: 36px;
+    line-height: 34px; }
+.nice-select.small:after {
+      height: 4px;
+      width: 4px; }
+.nice-select.small .option {
+      line-height: 34px;
+      min-height: 34px; }
+.nice-select .list {
+    background: #fff;
+    border-radius:0;
+    margin-top:0;
+    opacity: 0;
+    overflow: hidden;
+    padding: 0;
+    pointer-events: none;
+    position: absolute;
+    top: 100%;
+    left: -1px;
+	right:-1px;
+	-webkit-transform-origin: 50% 0;
+        -ms-transform-origin: 50% 0;
+            transform-origin: 50% 0;
+    -webkit-transform: scale(0.75) translateY(-21px);
+        -ms-transform: scale(0.75) translateY(-21px);
+            transform: scale(0.75) translateY(-21px);
+    -webkit-transition: all 0.2s cubic-bezier(0.5, 0, 0, 1.25), opacity 0.15s ease-out;
+    transition: all 0.2s cubic-bezier(0.5, 0, 0, 1.25), opacity 0.15s ease-out;
+    z-index: 9; }
+.nice-select .list:hover .option:not(:hover) {
+      background-color: transparent !important; }
+.nice-select .option {
+    cursor: pointer;
+    line-height: 35px;
+	padding:10px 22px;
+    list-style: none;
+    min-height: 40px;
+    outline: none;
+    text-align: left;
+	font-family: 'IntegralCF-Regular';
+	font-size:15px;
+	border-bottom:solid 2px #010101;
+	color:#010101;
+	position:relative;
+    -webkit-transition: all 0.2s;
+    transition: all 0.2s;
+}
+.nice-select .option:last-child { border-bottom:none;}
+.nice-select .option:hover, 
+/*.nice-select .option.focus, */
+.nice-select .option.selected.focus {
+	color: #a3a3a3;
+}
+.nice-select .option:hover {
+	background:rgba(0,0,0,0.05);
+}
+.nice-select .option:before { position:absolute; left:22px; top:50%; width:12px; height:1px; content:''; background:#a3a3a3; opacity:0;}
+.nice-select .option.selected {
+	padding-left:42px;
+}
+.nice-select .option.selected:before { opacity:1;}
+.nice-select .option.selected:hover {
+      background:none;
+}
+.nice-select .option.disabled {
+      background-color: transparent;
+      color: #999;
+      cursor: default;
+}
+
+.no-csspointerevents .nice-select .list {
+  display: none; }
+
+.no-csspointerevents .nice-select.open .list {
+  display: block; }

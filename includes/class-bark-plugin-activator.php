@@ -27,6 +27,6 @@ class Bark_Plugin_Activator {
 	 * @since    1.0.0
 	 */
 	public static function activate() {
-		do_action( 'bar_plugin_activated' );
+		do_action( 'bark_plugin_activated' );
 	}
 }

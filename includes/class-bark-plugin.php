@@ -93,21 +93,36 @@ class Bark_Plugin {
 
 		/**
 		 * The class responsible for admin the actions and filters of the
-		 * core plugin.
+		 * plugin.
 		 */
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-bark-plugin-admin.php';
 
 		/**
-		 * The class responsible for orchestrating for front-end the actions and filters of the
-		 * core plugin.
+		 * The class responsible for  front-end actions and filters of the
+		 * plugin.
 		 */
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-bark-plugin-front.php';
+
+		/**
+		 * The class responsible for  user related the actions and filters of the
+		 * plugin.
+		 */
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-bark-plugin-user.php';
+
+		/**
+		 * The class responsible for  custom post type related the actions and filters of the
+		 * plugin.
+		 */
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-bark-plugin-custom-post-types.php';
 
 		/**
 		 * The class responsible for defining all actions that occur in the public-facing
 		 * side of the site.
 		 */
 		$this->loader = new Bark_Plugin_Loader();
+
+		$this->define_admin_hooks();
+		$this->define_front_end_hooks();
 	}
 
 	/**
@@ -129,6 +144,11 @@ class Bark_Plugin {
 	 * @access   private
 	 */
 	private function define_admin_hooks() {
+		/* register custom post types*/
+		$barkposttypes = new Bark_Plugin_Custom_Post_Types();
+		$this->loader->add_action( 'init', $barkposttypes, 'register_bark_services' );
+		$this->loader->add_action( 'init', $barkposttypes, 'register_bark_requests' );
+		/* register custom post types*/
 	}
 
 	/**
@@ -139,6 +159,9 @@ class Bark_Plugin {
 	 * @access   private
 	 */
 	private function define_front_end_hooks() {
+		/* register user role*/
+		$user_obj = new Bark_Plugin_User();
+		$this->loader->add_action( 'bark_plugin_activated', $user_obj, 'register_bark_user_roles' );
 	}
 
 	/**
@@ -195,7 +218,7 @@ class Bark_Plugin {
 		$slug        = basename( DUTCHIE_CONNECT_PATH ) . '/bark-plugin.php';
 		$plugin_data = get_plugin_data( DUTCHIE_CONNECT_PATH . '/bark-plugin.php' );
 		$version     = $this->version;
-		$data        = new \Dutchie_AutoUpdate( $version, 'http://localhost/testDemo2/update', $slug, '', 'abcd' );
+		$data        = new \Bark_Plugin_Autoupdate( $version, 'http://localhost/testDemo2/update', $slug, '', 'abcd' );
 	}
 
 }
