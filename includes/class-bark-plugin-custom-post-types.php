@@ -66,6 +66,12 @@ class Bark_Plugin_Custom_Post_Types {
 			'single_name'         => 'Request',
 			'menu_name'           => 'Bark Requests',
 			'hide_admin'          => false,
+			'support'             => array(
+				'title',
+				'thumbnail',
+				'author',
+				'editor',
+			),
 			'hierarchical'        => false,
 			'public'              => false,
 			'show_ui'             => true,
@@ -97,7 +103,7 @@ class Bark_Plugin_Custom_Post_Types {
 		$posttype_label               = $posttype_data['label'];
 		$posttype_single_name         = $posttype_data['single_name'];
 		$posttype_menu_name           = $posttype_data['menu_name'];
-		$posttype_supports            = $posttype_data['support'];
+		$posttype_supports            = '';
 		$posttype_hide_admin          = $posttype_data['hide_admin'];
 		$posttype_hierarchical        = $posttype_data['hierarchical'];
 		$posttype_public              = $posttype_data['public'];
@@ -107,6 +113,10 @@ class Bark_Plugin_Custom_Post_Types {
 		$posttype_exclude_from_search = $posttype_data['exclude_from_search'];
 		$posttype_publicly_queryable  = $posttype_data['publicly_queryable'];
 		$posttype_icon                = $posttype_data['icon'];
+
+		if ( isset( $posttype_data['support'] ) ) {
+			$posttype_supports = $posttype_data['support'];
+		}
 
 		$labels = array(
 			'name'          => $posttype_name,

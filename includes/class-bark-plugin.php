@@ -92,16 +92,22 @@ class Bark_Plugin {
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-bark-plugin-loader.php';
 
 		/**
+		 * All general functions file
+		 * core plugin.
+		 */
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/bark-plugin-general-functions.php';
+
+		/**
 		 * The class responsible for admin the actions and filters of the
 		 * plugin.
 		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-bark-plugin-admin.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-bark-plugin-admin.php';
 
 		/**
 		 * The class responsible for  front-end actions and filters of the
 		 * plugin.
 		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-bark-plugin-front.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'front-end/class-bark-plugin-front.php';
 
 		/**
 		 * The class responsible for  user related the actions and filters of the
@@ -159,9 +165,22 @@ class Bark_Plugin {
 	 * @access   private
 	 */
 	private function define_front_end_hooks() {
-		/* register user role*/
+		/* Register user role*/
 		$user_obj = new Bark_Plugin_User();
 		$this->loader->add_action( 'bark_plugin_activated', $user_obj, 'register_bark_user_roles' );
+
+		$front_obj = new Bark_Plugin_Front( $this->get_plugin_name(), $this->get_version() );
+		/** Add Style and script */
+		$this->loader->add_action( 'wp_enqueue_scripts', $front_obj, 'enqueue_styles' );
+		$this->loader->add_action( 'wp_enqueue_scripts', $front_obj, 'enqueue_scripts' );
+
+		/** Add shortcode */
+		add_shortcode( 'bark-search-bar', array( $front_obj, 'bark_searchbar_shortcode' ), 99 );
+
+		/** Add suggestion ajax calls */
+		$this->loader->add_action( 'wp_ajax_bark_get_service_suggestions', $front_obj, 'bark_get_service_suggestions_call' );
+		$this->loader->add_action( 'wp_ajax_nopriv_bark_get_service_suggestions', $front_obj, 'bark_get_service_suggestions_call' );
+
 	}
 
 	/**
@@ -220,5 +239,17 @@ class Bark_Plugin {
 		$version     = $this->version;
 		$data        = new \Bark_Plugin_Autoupdate( $version, 'http://localhost/testDemo2/update', $slug, '', 'abcd' );
 	}
+
+	/**
+	 * Get and return service suggestions.
+	 * of the plugin.
+	 *
+	 * @since    1.0.0
+	 * @access   private
+	 */
+	public function ajax_get_service_suggestions() {
+
+	}
+
 
 }
