@@ -153,8 +153,15 @@ class Bark_Plugin {
 		/* register custom post types*/
 		$barkposttypes = new Bark_Plugin_Custom_Post_Types();
 		$this->loader->add_action( 'init', $barkposttypes, 'register_bark_services' );
+		$this->loader->add_action( 'init', $barkposttypes, 'register_bark_services_types' );
 		$this->loader->add_action( 'init', $barkposttypes, 'register_bark_requests' );
+		//$this->loader->add_action( 'add_meta_boxes', $barkposttypes, 'service_meta_box' );
 		/* register custom post types*/
+
+		$admin_obj = new Bark_Plugin_Admin( $this->get_plugin_name(), $this->get_version() );
+		/** Add Style and script */
+		$this->loader->add_action( 'admin_enqueue_scripts', $admin_obj, 'enqueue_styles' );
+		$this->loader->add_action( 'admin_enqueue_scripts', $admin_obj, 'enqueue_scripts' );
 	}
 
 	/**
@@ -176,10 +183,15 @@ class Bark_Plugin {
 
 		/** Add shortcode */
 		add_shortcode( 'bark-search-bar', array( $front_obj, 'bark_searchbar_shortcode' ), 99 );
+		$this->loader->add_action( 'wp_footer', $front_obj, 'bark_search_modal', 99 );
 
 		/** Add suggestion ajax calls */
 		$this->loader->add_action( 'wp_ajax_bark_get_service_suggestions', $front_obj, 'bark_get_service_suggestions_call' );
 		$this->loader->add_action( 'wp_ajax_nopriv_bark_get_service_suggestions', $front_obj, 'bark_get_service_suggestions_call' );
+
+		/** Add suggestion ajax calls */
+		$this->loader->add_action( 'wp_ajax_bark_filtered_service_providers', $front_obj, 'bark_filtered_service_providers_call' );
+		$this->loader->add_action( 'wp_ajax_nopriv_bark_filtered_service_providers', $front_obj, 'bark_filtered_service_providers_call' );
 
 	}
 

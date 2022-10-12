@@ -1,0 +1,25 @@
+.bark-plugin-wrap{display: block;width: 100%;position: relative;}
+.bark-plugin-wrap *{box-sizing: border-box}
+.bark-plugin-wrap .input-text{width: 100%;height: 58pxpx;display: block;margin: 0;padding: 0 16px;border: 1px solid #C2C2C2;box-shadow: inset 1px 2px 2px rgb(0 0 0 / 8%);border-radius: 5px;font-weight: 400;font-size: 14px;color: #000;}
+.bark-plugin-wrap .add-new-option{display: block;width: 100%;padding: 10px 0 0;}
+.bark-plugin-wrap .btn{display: inline-block;background: #D5B9AC;font-size: 14px;color: #FFFFFF;text-transform: uppercase;height: auto;align-items: center;padding: 0 42px 0;border-radius: 100px;font-weight: 500;border: 0;outline: none;-webkit-transition: all .3s ease-in-out;-moz-transition: all .3s ease-in-out;-ms-transition: all .3s ease-in-out;-o-transition: all .3s ease-in-out;transition: all .3s ease-in-out;padding: 10px;text-decoration: none;}
+.bark-plugin-wrap .row{width: 100%;--bs-gutter-x: 1.5rem;--bs-gutter-y: 0;display: flex;flex-wrap: wrap;margin-top: calc(var(--bs-gutter-y) * -1);margin-right: calc(var(--bs-gutter-x) * -.5);margin-left: calc(var(--bs-gutter-x) * -.5);}
+.bark-plugin-wrap .row > *{flex-shrink: 0;width: 100%;max-width: 100%;padding-right: calc(var(--bs-gutter-x) * .5);padding-left: calc(var(--bs-gutter-x) * .5);margin-top: var(--bs-gutter-y);}
+.bark-plugin-wrap .row .full-col{flex: 0 0 auto;width: 100%;}
+.bark-plugin-wrap .row .half-col{flex: 0 0 auto;width: 50%; }
+
+
+.bark-plugin-wrap .options-blocks{display: block;width: 100%;padding: 10px 0;}
+.bark-plugin-wrap .options-blocks .question{display: block;width: 100%;padding: 5px 0;}
+.bark-plugin-wrap .options-blocks .question label{display: block;margin: 0 0 5px;font-weight: 600;font-size: 14px;color: #000;}
+.bark-plugin-wrap .options-blocks .options .can-clone{display: flex;flex-wrap: wrap;width: 100%;align-items: center;justify-content: space-between;margin: 5px 0 0}
+.bark-plugin-wrap .options-blocks .options .can-clone + .can-clone{margin: 10px 0 0}
+.bark-plugin-wrap .options-blocks .options.multiple .input-text{flex: 0 0 auto;width: calc(100% - 100px);}
+.bark-plugin-wrap .options-blocks .options a.remove-options{flex: 0 0 auto;width: 90px;margin: 0 0 0 10px;text-decoration: none;color: #e94a4ac9;text-align: right; display: none;}
+.bark-plugin-wrap .options-blocks .options.multiple a.remove-options{display: block;}
+.bark-plugin-wrap .options-blocks .options a.remove-options i{display: inline-block;width: 20px;vertical-align: middle;padding: 0 2px;}
+.bark-plugin-wrap .options-blocks .options a.remove-options i svg{fill: #e94a4ac9;}
+.bark-plugin-wrap .options-blocks .add-new-option a i{display: inline-block;width: 20px;vertical-align: middle;padding: 0 2px;}
+.bark-plugin-wrap .options-blocks .selected-option{display: block;width: 100%;padding: 15px 0;}
+.bark-plugin-wrap .options-blocks .selected-option label{display: block;margin: 0 0 5px;font-weight: 600;font-size: 14px;color: #000;}
+.bark-plugin-wrap .options-blocks .selected-option select{display: block;width: 100%;padding: 0.375rem 0.75rem;font-size: 1rem;font-weight: 400;line-height: 1.5;color: #212529;background-color: #fff;background-clip: padding-box;border: 1px solid #ced4da;-webkit-appearance: none;-moz-appearance: none;appearance: none;border-radius: 0.25rem;transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;}

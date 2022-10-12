@@ -76,6 +76,7 @@ class Bark_Plugin_Front {
 		$localizedata = array(
 			'ajaxurl'                  => admin_url( 'admin-ajax.php' ),
 			'bark_service_suggections' => wp_create_nonce( 'bark-service-suggections' ),
+			'bark_service_providers'   => wp_create_nonce( 'bark-service-providers' ),
 		);
 
 		wp_localize_script( $this->plugin_name . '-min-script', 'bark_front_obj', $localizedata );
@@ -117,6 +118,15 @@ class Bark_Plugin_Front {
 		return $storehtml;
 	}
 
+	/**
+	 * This function will add search modal markup in wp_footer
+	 *
+	 * @since    1.0.0
+	 * @access   public
+	 */
+	public function bark_search_modal() {
+		bark_get_template_part( '/modal/search-modal' );
+	}
 
 	/**
 	 * Gets the plugin service suggestion call.
@@ -159,12 +169,23 @@ class Bark_Plugin_Front {
 					$image      = get_the_post_thumbnail_url( $service_id );
 
 					if ( empty( $image ) ) {
-						$image = BARK_PLUGIN_URL . '/front-end/images/banner-image.jpg';
+						$image = BARK_PLUGIN_URL . 'front-end/assets/images/banner-image.png';
+					}
+
+					$service_types = get_the_terms( $service_id, 'service-types' );
+
+					$types = array();
+
+					if ( ! empty( $service_types ) ) {
+						foreach ( $service_types as $term ) {
+							$types[ $term->term_id ] = $term->name;
+						}
 					}
 
 					$service_suggections[ $i ]['id']    = $service_id;
 					$service_suggections[ $i ]['title'] = get_the_title();
 					$service_suggections[ $i ]['image'] = $image;
+					$service_suggections[ $i ]['types'] = $types;
 					$i++;
 				}
 			}
@@ -176,6 +197,96 @@ class Bark_Plugin_Front {
 			array(
 				'error'       => $error,
 				'suggections' => $service_suggections,
+			)
+		);
+		die();
+	}
+
+	/**
+	 * Gets filtered service providers.
+	 *
+	 * @since    1.0.0
+	 * @access   public
+	 */
+	public function bark_filtered_service_providers_call() {
+		$email      = '';
+		$name       = '';
+		$work_time  = '';
+		$aimed_at   = '';
+		$describe   = '';
+		$phone      = '';
+		$name       = '';
+		$service_id = '';
+
+		$user_obj = new Bark_Plugin_User();
+
+		if ( ! isset( $_POST['nounce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nounce'] ) ), 'bark-service-providers' ) ) {
+			echo wp_json_encode(
+				array(
+					'error' => 1,
+					'msg'   => 'Could not match the nounce',
+				)
+			);
+			die();
+		}
+
+		if ( isset( $_POST['amount-work'] ) ) {
+			$work_time = sanitize_text_field( wp_unslash( $_POST['amount-work'] ) );
+		}
+
+		if ( isset( $_POST['aimed-at'] ) ) {
+			$aimed_at = sanitize_text_field( wp_unslash( $_POST['aimed-at'] ) );
+		}
+
+		if ( isset( $_POST['describe'] ) ) {
+			$describe = sanitize_text_field( wp_unslash( $_POST['describe'] ) );
+		}
+
+		if ( isset( $_POST['email'] ) ) {
+			$email = sanitize_text_field( wp_unslash( $_POST['email'] ) );
+		}
+
+		if ( isset( $_POST['phone'] ) ) {
+			$phone = sanitize_text_field( wp_unslash( $_POST['phone'] ) );
+		}
+
+		if ( isset( $_POST['name'] ) ) {
+			$name = sanitize_text_field( wp_unslash( $_POST['name'] ) );
+		}
+
+		if ( isset( $_POST['service-id'] ) ) {
+			$service_id = sanitize_text_field( wp_unslash( $_POST['service-id'] ) );
+		}
+
+		$userdata = $user_obj->bark_get_user_data( $email );
+		$user_id  = '';
+		if ( ! empty( $userdata ) ) {
+			$user_id = $userdata['ID'];
+		} else {
+
+			$new_user_data = array(
+				'name'  => $name,
+				'phone' => $phone,
+				'email' => $email,
+				'role'  => 'bark_customer',
+			);
+
+			$user_id = $user_obj->bark_add_new_user( $new_user_data );
+
+			echo wp_json_encode(
+				array(
+					'error'    => 0,
+					'msg'      => 'User created',
+					'redirect' => '',
+				)
+			);
+			die();
+		}
+		echo wp_json_encode(
+			array(
+				'error'    => 1,
+				'msg'      => 'Error while adding user',
+				'redirect' => '',
 			)
 		);
 		die();

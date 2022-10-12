@@ -22,6 +22,9 @@
 		</div>
 		<div class="input-row button">
 			<input type="submit" value="<?php echo esc_html( $args['search_btn_text'] ); ?>">
+			<input type="hidden" name="service-id" value="">
+			<input type="hidden" name="service-image" value="">
+			<textarea name="service-types" class='hide' style='display:none'></textarea>
 		</div>
 	</form>
 </div>

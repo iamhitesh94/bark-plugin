@@ -150,5 +150,91 @@ class Bark_Plugin_Custom_Post_Types {
 
 	}
 
+	/**
+	 * Add custom taxonommy for custom post type
+	 * of the plugin.
+	 *
+	 * @since    1.0.0
+	 * @access   public
+	 * @param array $taxonomy_data Data for custom taxonomy data.
+	 */
+	public function add_custom_taxonomy( $taxonomy_data = array() ) {
+		// Add new taxonomy, make it hierarchical (like categories).
+
+		$name          = $taxonomy_data['name'];
+		$singluar_name = $taxonomy_data['singluar_name'];
+		$menu_name     = $taxonomy_data['menu_name'];
+		$slug          = $taxonomy_data['slug'];
+		$taxonomy_name = $taxonomy_data['taxonomy_name'];
+		$post_type     = $taxonomy_data['post_type'];
+
+		$labels = array(
+			'name'          => $name,
+			'singular_name' => $singluar_name,
+			'menu_name'     => $menu_name,
+		);
+
+		$args = array(
+			'hierarchical'      => true,
+			'labels'            => $labels,
+			'show_ui'           => true,
+			'show_admin_column' => true,
+			'query_var'         => true,
+			'rewrite'           => array( 'slug' => $slug ),
+		);
+
+		register_taxonomy( $taxonomy_name, array( $post_type ), $args );
+	}
+
+	/**
+	 * Generate custom taxonommy for service
+	 * of the plugin.
+	 *
+	 * @since    1.0.0
+	 * @access   public
+	 */
+	public function register_bark_services_types() {
+		$taxonomy_data = array(
+			'name'          => 'Service Types',
+			'singluar_name' => 'Service Type',
+			'menu_name'     => 'Service Types',
+			'slug'          => 'service-type',
+			'taxonomy_name' => 'service-types',
+			'post_type'     => 'bark-service',
+		);
+
+		$this->add_custom_taxonomy( $taxonomy_data );
+
+	}
+
+
+	/**
+	 * Generate metabox for service
+	 * of the plugin.
+	 *
+	 * @since    1.0.0
+	 * @access   public
+	 */
+	public function service_meta_box() {
+		add_meta_box(
+			'service_option',       // $id
+			'Service Option',                  // $title
+			array( $this, 'services_options_metabox' ),  // $callback
+			'bark-service',                 // $page
+			'normal',                  // $context
+			'high'                     // $priority
+		);
+	}
+
+	/**
+	 * Generate options for service
+	 * of the plugin.
+	 *
+	 * @since    1.0.0
+	 * @access   public
+	 */
+	public function services_options_metabox() {
+		require_once BARK_PLUGIN_PATH . '/admin/parts/metabox/service-metabox.php';
+	}
 
 }
